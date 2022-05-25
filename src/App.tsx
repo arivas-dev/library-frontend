@@ -1,1 +1,3 @@
-export const App = () => <h1>Hello world</h1>
+import { AppRoutes } from 'components/routes'
+
+export const App = () => <AppRoutes />
