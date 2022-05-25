@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash'
-import { User } from 'types/Models'
-import { Error, Loadable } from 'types/State'
+import { User } from 'types/models'
+import { Error, Loadable } from 'types/state'
 import { updateLoadableData, updateLoadableMetaProps } from 'utils/state.utils'
 
 type UpdateUserMetaProps = {

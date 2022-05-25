@@ -1,4 +1,4 @@
-import { Loadable, Error } from 'types/State'
+import { Loadable, Error } from 'types/state'
 
 export const createError = (message: string, name?: string): Error => ({
   message,

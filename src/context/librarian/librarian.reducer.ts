@@ -1,6 +1,6 @@
 import { updateLoadableData, updateLoadableMetaProps } from 'utils/state.utils'
-import { StudentRequest, User } from 'types/Models'
-import { Loadable, Error } from 'types/State'
+import { StudentRequest, User } from 'types/models'
+import { Loadable, Error } from 'types/state'
 import { cloneDeep } from 'lodash'
 
 type UpdateUsersMetaProps = {

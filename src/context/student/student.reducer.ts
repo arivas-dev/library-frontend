@@ -1,5 +1,5 @@
-import { Loadable, Error } from 'types/State'
-import { Book, StudentRequest } from 'types/Models'
+import { Loadable, Error } from 'types/state'
+import { Book, StudentRequest } from 'types/models'
 import { updateLoadableData, updateLoadableMetaProps } from 'utils/state.utils'
 import { cloneDeep } from 'lodash'
 

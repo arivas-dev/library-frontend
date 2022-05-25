@@ -1,7 +1,7 @@
 import { createContext, useReducer, useCallback, ReactNode } from 'react'
 import { initLoadable } from 'utils/state.utils'
 import { appReducer, BaseAppState } from './app.reducer'
-import { User } from 'types/Models'
+import { User } from 'types/models'
 
 type AppContextState = BaseAppState & {
   login: (name: string, password: string) => Promise<void>
