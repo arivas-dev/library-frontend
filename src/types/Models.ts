@@ -22,6 +22,7 @@ export type User = {
 export type StudentRequest = {
   id: number
   book: Book
+  count: number
 }
 
 export type BookCheckout = {
