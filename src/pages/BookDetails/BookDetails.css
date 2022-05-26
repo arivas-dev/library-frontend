@@ -1,0 +1,22 @@
+.book-details {
+  padding: 2em;
+}
+
+.book-details-header {
+  margin-bottom: 3em;
+}
+
+.book-details-meta {
+  padding-left: 1em;
+}
+
+.book-details-meta h2 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.book-details p {
+  font-size: 16px;
+  margin: 0;
+}
+
