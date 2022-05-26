@@ -2,7 +2,7 @@ export const AppRoutes = {
   student: {
     base: 'student',
     books: 'books',
-    bookDetails: (id: string) => `books/${id}`,
+    bookDetails: (id: number) => `books/${id}`,
     requests: 'my-requests',
   },
   librarian: {

@@ -2,7 +2,7 @@ export type Book = {
   id: number
   title: string
   description: string
-  copies_available: string
+  copies_available: number
   image: string | null
   id_gender: number
   id_author: number

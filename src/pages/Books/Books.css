@@ -1,0 +1,22 @@
+.books-page {
+  padding: 2em 3em;
+}
+
+.books-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.books-page-header .books-filters {
+  justify-content: center;
+}
+
+.books-filter-term {
+  margin-bottom: 1em;
+}
+
+.books-page a:not(:last-child) .ant-list-item {
+  border-bottom: 1px solid #f0f0f0 !important;
+}
