@@ -1,0 +1,43 @@
+.login-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0C272D;
+}
+
+.login-page-form {
+  margin: auto;
+  width: 700px;
+  max-width: 96vw;
+  background-color: white;
+  border-radius: 20px;
+  padding: 3em 1em;
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-page-form h1 {
+  text-align: center;
+  color: #0C272D;
+  font-size: 32px;
+}
+
+.login-page-username,
+.login-page-password {
+  margin: 1em 0;
+  height: 40px;
+}
+
+.login-page-form .ant-btn {
+  height: 40px;
+  width: 140px;
+  font-size: 18px;
+}
+
+.login-page-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5em;
+  margin-top: 1.5em;
+}
