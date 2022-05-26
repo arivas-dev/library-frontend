@@ -1,0 +1,27 @@
+.books-checkout-page {
+  padding: 2em;
+}
+
+.books-checkout-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.books-checkout-header h1 {
+  margin: 0;
+}
+
+.books-checkout-page .ant-list-item {
+  cursor: pointer;
+}
+
+.books-checkout-page .ant-list-item:hover {
+  background-color: rgba(220, 238, 242, 0.3);
+}
+
+.books-checkout-page .ant-list-item-meta-title {
+  margin: 0;
+}
