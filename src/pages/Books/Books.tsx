@@ -1,38 +1,19 @@
-import { Book } from 'types/models'
+import { StudentContext } from 'context/student'
 import { List } from 'antd'
 import { BooksFilter } from 'components/BooksFilter'
 import { BookItem } from 'components/BookItem'
+import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { shouldLoadData } from 'utils/state.utils'
 import './Books.css'
 
-const books: Book[] = [
-  {
-    author: 'Herman Melville',
-    copies_available: 1,
-    description: 'The description',
-    id: 1,
-    id_author: 9,
-    id_gender: 1,
-    image: 'https://picsum.photos/300',
-    name: 'Moby-dick',
-    published: 1900,
-    title: 'The moby-dick',
-  },
-  {
-    author: 'Homer',
-    copies_available: 1,
-    description: 'The description',
-    id: 2,
-    id_author: 2,
-    id_gender: 4,
-    image: 'https://picsum.photos/300',
-    name: 'The odyssea',
-    published: 1000,
-    title: 'The odyssea',
-  },
-]
-
 const Books = () => {
+  const { books, loadBooks } = useContext(StudentContext)
+
+  useEffect(() => {
+    if (shouldLoadData(books)) loadBooks()
+  }, [books, loadBooks])
+
   return (
     <div className="books-page">
       <div className="books-page-header">
@@ -40,12 +21,16 @@ const Books = () => {
         <BooksFilter />
       </div>
       <List
-        dataSource={books}
-        renderItem={(book) => (
-          <Link to={book.id.toString()} key={book.id}>
-            <BookItem book={book} />
-          </Link>
-        )}
+        loading={books.isLoading}
+        dataSource={books.data}
+        renderItem={(book) => {
+          console.log('book :>> ', book)
+          return (
+            <Link to={book.id.toString()} key={book.id}>
+              <BookItem book={book} />
+            </Link>
+          )
+        }}
       />
     </div>
   )

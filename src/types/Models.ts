@@ -4,11 +4,12 @@ export type Book = {
   description: string
   copies_available: number
   image: string | null
-  id_gender: number
+  id_genre: number
   id_author: number
   published: number
   name: string
   author: string
+  in_stock: number
 }
 
 export type User = {

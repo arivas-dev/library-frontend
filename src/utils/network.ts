@@ -14,7 +14,7 @@ const protectedResourcesInstance = axios.create({
 protectedResourcesInstance.interceptors.request.use(
   (config) => {
     if (config.headers) {
-      config.headers.Authorization = LocalStorageHandler.token
+      config.headers.Authorization = `Bearer ${LocalStorageHandler.token}`
     }
     return config
   },
@@ -62,13 +62,12 @@ export const apiPostProtectedResource = async <T>(
   data?: unknown
 ): Promise<ApiResponse<T>> => {
   try {
-    const res = await protectedResourcesInstance.post<BackEndResponse<T>>(
-      endpoint,
-      data
-    )
+    const res = await protectedResourcesInstance.post<
+      BackEndResponse<{ data: T }>
+    >(endpoint, data)
 
     return isBackEndSuccessfulResponse(res.data)
-      ? { data: res.data }
+      ? { data: res.data.data }
       : {
           error: createError(
             res.data.message,
@@ -84,12 +83,12 @@ export const apiGetProtectedResource = async <T>(
   endpoint: string
 ): Promise<ApiResponse<T>> => {
   try {
-    const res = await protectedResourcesInstance.get<BackEndResponse<T>>(
-      endpoint
-    )
+    const res = await protectedResourcesInstance.get<
+      BackEndResponse<{ data: T }>
+    >(endpoint)
 
     return isBackEndSuccessfulResponse(res.data)
-      ? { data: res.data }
+      ? { data: res.data.data }
       : {
           error: createError(
             res.data.message,

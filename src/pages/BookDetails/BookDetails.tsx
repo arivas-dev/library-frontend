@@ -10,11 +10,12 @@ const book: Book = {
   description: 'The description',
   id: 1,
   id_author: 9,
-  id_gender: 1,
+  id_genre: 1,
   image: 'https://picsum.photos/300',
   name: 'Moby-dick',
   published: 1900,
   title: 'The moby-dick',
+  in_stock: 1,
 }
 
 const BookDetails = () => {

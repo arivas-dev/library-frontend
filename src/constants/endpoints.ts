@@ -5,8 +5,8 @@ const joinPath = (path: string) => `${Environment.apiUrl}/${path}`
 export const Endpoints = {
   login: joinPath('login'),
   students: {
-    books: joinPath('books'),
-    bookDetails: (id: number) => joinPath(`books/${id}`),
+    books: joinPath('book'),
+    bookDetails: (id: number) => joinPath(`book/${id}`),
     requests: joinPath('books'),
     createRequest: joinPath('create-request'),
   },

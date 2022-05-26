@@ -26,3 +26,9 @@ export const updateLoadableData = <T>(loadable: Loadable<T>, data: T) => {
   updateLoadableMetaProps(loadable, false, null)
   loadable.data = data
 }
+
+export const shouldLoadData = <T>(loadable: Loadable<T>): boolean =>
+  !loadable.isDirty && !loadable.isLoading && !loadable.error
+
+export const hasSuccessfullyLoaded = <T>(loadable: Loadable<T>): boolean =>
+  loadable.isDirty && !loadable.isLoading && !loadable.error

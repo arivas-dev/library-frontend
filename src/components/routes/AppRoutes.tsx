@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom'
+import { Layout } from 'components/Layout'
 import { AppRoutes as AppRoutesObj } from 'constants/app.routes'
 import { lazy } from 'react'
 
@@ -31,7 +32,7 @@ export const AppRoutes = () => {
   const { librarian, login, notFound, student } = AppRoutesObj
 
   const renderStudentRoutes = () => (
-    <Route path={student.base}>
+    <Route path={student.base} element={<Layout />}>
       <Route index element={<Navigate to={student.books} replace />} />
       <Route path={student.books}>
         <Route index element={<BooksPage />} />
@@ -42,7 +43,7 @@ export const AppRoutes = () => {
   )
 
   const renderLibrarianRoutes = () => (
-    <Route path={librarian.base}>
+    <Route path={librarian.base} element={<Layout />}>
       <Route index element={<Navigate to={librarian.checkout} replace />} />
       <Route path={librarian.checkout} element={<BooksCheckoutPage />} />
       <Route
