@@ -1,7 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { LocalStorageHandler } from './LocalStorageHandler'
-import { ApiResponse } from 'types/network'
+import { ApiResponse, BackEndResponse } from 'types/network'
 import { createError } from './state.utils'
+import {
+  isBackEndSuccessfulResponse,
+  getErrorNameFromStatus,
+} from './network.handlers'
 
 const protectedResourcesInstance = axios.create({
   validateStatus: (status) => status !== 401,
@@ -35,9 +39,20 @@ export const apiPostPublicResource = async <T>(
   data?: unknown
 ): Promise<ApiResponse<T>> => {
   try {
-    const res = await axios.post(endpoint, data)
-    return res.data
+    const res = await axios.post<BackEndResponse<T>>(endpoint, data, {
+      validateStatus: (status) => status !== 401,
+    })
+
+    return isBackEndSuccessfulResponse(res.data)
+      ? { data: res.data }
+      : {
+          error: createError(
+            res.data.message,
+            getErrorNameFromStatus(res.status)
+          ),
+        }
   } catch (error) {
+    console.log(JSON.stringify((error as any).response))
     return { error: createError((error as any).message, (error as any).name) }
   }
 }
@@ -47,8 +62,19 @@ export const apiPostProtectedResource = async <T>(
   data?: unknown
 ): Promise<ApiResponse<T>> => {
   try {
-    const res = await protectedResourcesInstance.post(endpoint, data)
-    return res.data
+    const res = await protectedResourcesInstance.post<BackEndResponse<T>>(
+      endpoint,
+      data
+    )
+
+    return isBackEndSuccessfulResponse(res.data)
+      ? { data: res.data }
+      : {
+          error: createError(
+            res.data.message,
+            getErrorNameFromStatus(res.status)
+          ),
+        }
   } catch (error) {
     return { error: createError((error as any).message, (error as any).name) }
   }
@@ -58,8 +84,18 @@ export const apiGetProtectedResource = async <T>(
   endpoint: string
 ): Promise<ApiResponse<T>> => {
   try {
-    const res = await protectedResourcesInstance.get(endpoint)
-    return res.data
+    const res = await protectedResourcesInstance.get<BackEndResponse<T>>(
+      endpoint
+    )
+
+    return isBackEndSuccessfulResponse(res.data)
+      ? { data: res.data }
+      : {
+          error: createError(
+            res.data.message,
+            getErrorNameFromStatus(res.status)
+          ),
+        }
   } catch (error) {
     return { error: createError((error as any).message, (error as any).name) }
   }

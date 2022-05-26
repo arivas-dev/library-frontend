@@ -3,7 +3,7 @@ import { Environment } from 'utils/Environment'
 const joinPath = (path: string) => `${Environment.apiUrl}/${path}`
 
 export const Endpoints = {
-  login: joinPath('join'),
+  login: joinPath('login'),
   students: {
     books: joinPath('books'),
     bookDetails: (id: number) => joinPath(`books/${id}`),

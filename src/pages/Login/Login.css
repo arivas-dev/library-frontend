@@ -3,7 +3,7 @@
   width: 100vw;
   height: 100vh;
   background-color: #0C272D;
-}
+} 
 
 .login-page-form {
   margin: auto;
@@ -23,7 +23,7 @@
   font-size: 32px;
 }
 
-.login-page-username,
+.login-page-email,
 .login-page-password {
   margin: 1em 0;
   height: 40px;

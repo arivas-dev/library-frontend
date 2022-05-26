@@ -1,5 +1,6 @@
 import { AppRoutes } from 'components/routes'
 import { Suspense } from 'react'
+import { AppContextProvider } from 'context/app'
 import { Spin } from 'antd'
 
 export const App = () => (
@@ -13,6 +14,8 @@ export const App = () => (
       />
     }
   >
-    <AppRoutes />
+    <AppContextProvider>
+      <AppRoutes />
+    </AppContextProvider>
   </Suspense>
 )

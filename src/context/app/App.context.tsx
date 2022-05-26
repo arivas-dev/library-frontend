@@ -12,7 +12,7 @@ type LoginResponse = User & {
 }
 
 type AppContextState = BaseAppState & {
-  login: (name: string, password: string) => Promise<void>
+  login: (email: string, password: string) => Promise<string | void>
 }
 
 const initialAppState: AppContextState = {
@@ -33,12 +33,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const { user } = state
 
   const login = useCallback(
-    async (username: string, password: string) => {
+    async (email: string, password: string) => {
       dispatch({ type: 'UPDATE_USER_META_PROPS', isLoading: true })
       const response = await apiPostPublicResource<LoginResponse>(
         Endpoints.login,
         {
-          username,
+          email,
           password,
         }
       )
@@ -55,6 +55,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         isLoading: false,
         error: response.error,
       })
+
+      return response.error.message
     },
     [dispatch]
   )
