@@ -1,7 +1,15 @@
 import { createContext, useReducer, useCallback, ReactNode } from 'react'
 import { initLoadable } from 'utils/state.utils'
+import { isSuccesfulResponse } from 'utils/network.handlers'
+import { apiPostPublicResource } from 'utils/network'
 import { appReducer, BaseAppState } from './app.reducer'
 import { User } from 'types/models'
+import { Endpoints } from 'constants/endpoints'
+import { LocalStorageHandler } from 'utils/LocalStorageHandler'
+
+type LoginResponse = User & {
+  token: string
+}
 
 type AppContextState = BaseAppState & {
   login: (name: string, password: string) => Promise<void>
@@ -24,18 +32,32 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(appReducer, initialAppState)
   const { user } = state
 
-  const login = useCallback(async () => {
-    try {
+  const login = useCallback(
+    async (username: string, password: string) => {
       dispatch({ type: 'UPDATE_USER_META_PROPS', isLoading: true })
-      // dispatch({ type: 'UPDATE_USER_DATA', user: {} as any })
-    } catch (error) {
+      const response = await apiPostPublicResource<LoginResponse>(
+        Endpoints.login,
+        {
+          username,
+          password,
+        }
+      )
+
+      if (isSuccesfulResponse(response)) {
+        const { token, ...user } = response.data
+        LocalStorageHandler.token = token
+        dispatch({ type: 'UPDATE_USER_DATA', user })
+        return
+      }
+
       dispatch({
         type: 'UPDATE_USER_META_PROPS',
         isLoading: false,
-        error: error as any,
+        error: response.error,
       })
-    }
-  }, [dispatch])
+    },
+    [dispatch]
+  )
 
   return (
     <AppContext.Provider value={{ user, login }}>

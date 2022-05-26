@@ -30,6 +30,18 @@ protectedResourcesInstance.interceptors.response.use(
   }
 )
 
+export const apiPostPublicResource = async <T>(
+  endpoint: string,
+  data?: unknown
+): Promise<ApiResponse<T>> => {
+  try {
+    const res = await axios.post(endpoint, data)
+    return res.data
+  } catch (error) {
+    return { error: createError((error as any).message, (error as any).name) }
+  }
+}
+
 export const apiPostProtectedResource = async <T>(
   endpoint: string,
   data?: unknown

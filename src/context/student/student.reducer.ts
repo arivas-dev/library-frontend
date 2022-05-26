@@ -25,15 +25,28 @@ type UpdateRequestsData = {
   requests: StudentRequest[]
 }
 
+type UpdateRequestCreationMetaProps = {
+  type: 'UPDATE_REQUEST_CREATION_META_PROPS'
+  isLoading: boolean
+  error?: Error
+}
+
+type UpdateRequestCreationData = {
+  type: 'UPDATE_REQUEST_CREATION_DATA'
+}
+
 export type StudentActions =
   | UpdateBooksMetaProps
   | UpdateBooksData
   | UpdateRequestsMetaProps
   | UpdateRequestsData
+  | UpdateRequestCreationMetaProps
+  | UpdateRequestCreationData
 
 export type BaseStudentState = {
   books: Loadable<Book[]>
   requests: Loadable<StudentRequest[]>
+  requestCreation: Loadable<null>
 }
 
 export const studentReducer = (
@@ -54,6 +67,16 @@ export const studentReducer = (
       break
     case 'UPDATE_STUDENT_REQUESTS_DATA':
       updateLoadableData(clone.requests, action.requests)
+      break
+    case 'UPDATE_REQUEST_CREATION_META_PROPS':
+      updateLoadableMetaProps(
+        clone.requestCreation,
+        action.isLoading,
+        action.error
+      )
+      break
+    case 'UPDATE_REQUEST_CREATION_DATA':
+      updateLoadableData(clone.requestCreation, null)
       break
     default:
       return state

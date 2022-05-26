@@ -25,15 +25,29 @@ type UpdateRequestsData = {
   requests: StudentRequest[]
 }
 
+type UpdateResourceCreationMetaProps = {
+  type: 'UPDATE_USER_CREATION_META_PROPS' | 'UPDATE_BOOK_CREATION_META_PROPS'
+  isLoading: boolean
+  error?: Error
+}
+
+type UpdateResourceCreationData = {
+  type: 'UPDATE_USER_CREATION_DATA' | 'UPDATE_BOOK_CREATION_DATA'
+}
+
 export type LibrarianActions =
   | UpdateUsersMetaProps
   | UpdateUsersData
   | UpdateRequestsMetaProps
   | UpdateRequestsData
+  | UpdateResourceCreationMetaProps
+  | UpdateResourceCreationData
 
 export type BaseLibrarianState = {
   users: Loadable<User[]>
   requests: Loadable<StudentRequest[]>
+  userCreation: Loadable<null>
+  bookCreation: Loadable<null>
 }
 
 export const librarianReducer = (
@@ -54,6 +68,26 @@ export const librarianReducer = (
       break
     case 'UPDATE_USER_REQUESTS_DATA':
       updateLoadableData(clone.requests, action.requests)
+      break
+    case 'UPDATE_USER_CREATION_META_PROPS':
+      updateLoadableMetaProps(
+        clone.userCreation,
+        action.isLoading,
+        action.error
+      )
+      break
+    case 'UPDATE_USER_CREATION_DATA':
+      updateLoadableData(clone.userCreation, null)
+      break
+    case 'UPDATE_BOOK_CREATION_META_PROPS':
+      updateLoadableMetaProps(
+        clone.bookCreation,
+        action.isLoading,
+        action.error
+      )
+      break
+    case 'UPDATE_BOOK_CREATION_DATA':
+      updateLoadableData(clone.bookCreation, null)
       break
     default:
       return state
