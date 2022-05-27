@@ -8,7 +8,7 @@ export const Endpoints = {
     books: joinPath('book'),
     bookDetails: (id: number) => joinPath(`book/${id}`),
     requests: (userId: number) => joinPath(`loan/${userId}`),
-    createRequest: joinPath('create-request'),
+    createRequest: joinPath('loan/loanBook'),
   },
   librarian: {
     students: joinPath('students'),

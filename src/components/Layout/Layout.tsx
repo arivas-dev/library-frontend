@@ -1,12 +1,12 @@
-import { Layout as AntdLayout, Menu } from 'antd'
+import { Layout as AntdLayout, Menu, Button } from 'antd'
 import { Outlet, useLocation, Link } from 'react-router-dom'
 import { AppRoutes } from 'constants/app.routes'
 import { LibrarianContextProvider } from 'context/librarian'
 import { StudentContextProvider } from 'context/student'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import { LocalStorageHandler } from 'utils/LocalStorageHandler'
-import './Layout.css'
 import { User } from 'types/models'
+import './Layout.css'
 
 const { Header, Content } = AntdLayout
 
@@ -57,6 +57,20 @@ export const Layout = () => {
   return (
     <AntdLayout>
       <Header>
+        {LocalStorageHandler.token && (
+          <Button
+            type="primary"
+            style={{
+              float: 'right',
+              transform: 'translateY(18px)',
+            }}
+            size="large"
+          >
+            <Link to="/login" onClick={() => LocalStorageHandler.clearToken()}>
+              Logout
+            </Link>
+          </Button>
+        )}
         <Menu
           activeKey={activeRoute}
           theme="dark"

@@ -1,13 +1,14 @@
 import { Book } from 'types/models'
 import { useParams } from 'react-router-dom'
-import { Avatar, Table, Button, Row, Col, Spin } from 'antd'
+import { Avatar, Table, Button, Row, Col, Spin, message } from 'antd'
 import { useEffect, useContext } from 'react'
 import { StudentContext } from 'context/student'
 import { ColumnType } from 'antd/lib/table'
 import './BookDetails.css'
 
 const BookDetails = () => {
-  const { bookDetails, loadBookDetails } = useContext(StudentContext)
+  const { bookDetails, loadBookDetails, createRequest, requestCreation } =
+    useContext(StudentContext)
   const book = bookDetails.data
   const { id } = useParams<{ id: string }>()
 
@@ -16,6 +17,12 @@ const BookDetails = () => {
 
     if (Number.isFinite(bookId)) loadBookDetails(bookId)
   }, [id, loadBookDetails])
+
+  const handleRequestCreation = (bookId: number) => {
+    createRequest(bookId).then((error) => {
+      if (error) message.error(error)
+    })
+  }
 
   const cols: ColumnType<Book>[] = [
     {
@@ -38,8 +45,12 @@ const BookDetails = () => {
       dataIndex: 'id',
       title: 'Action',
       fixed: 'right',
-      render: (value: number) => (
-        <Button onClick={() => console.log(value)} type="primary">
+      render: (value: number, record) => (
+        <Button
+          disabled={record.copies_available === 0}
+          onClick={() => handleRequestCreation(value)}
+          type="primary"
+        >
           Checkout
         </Button>
       ),
@@ -67,6 +78,7 @@ const BookDetails = () => {
         </Col>
       </Row>
       <Table
+        loading={requestCreation.isLoading}
         dataSource={[book]}
         columns={cols}
         rowKey="id"

@@ -13,7 +13,7 @@ import {
 type StudentContextState = BaseStudentState & {
   loadBooks: () => Promise<void>
   loadRequests: () => Promise<void>
-  createRequest: (data: any) => Promise<void>
+  createRequest: (bookId: number) => Promise<string | void>
   loadBookDetails: (bookId: number) => Promise<void>
 }
 
@@ -94,11 +94,18 @@ export const StudentContextProvider = ({
   }, [dispatch])
 
   const createRequest = useCallback(
-    async (data: any) => {
+    async (bookId: number) => {
+      const user = LocalStorageHandler.user
+      if (!user) return
+
       dispatch({ type: 'UPDATE_REQUEST_CREATION_META_PROPS', isLoading: true })
       const response = await apiPostProtectedResource(
         Endpoints.students.createRequest,
-        data
+        {
+          id_book: bookId,
+          id_user: user.id,
+          returned: 0,
+        }
       )
 
       if (isSuccesfulResponse(response)) {
@@ -111,6 +118,8 @@ export const StudentContextProvider = ({
         isLoading: false,
         error: response.error,
       })
+
+      return response.error.message
     },
     [dispatch]
   )
