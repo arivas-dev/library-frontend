@@ -16,8 +16,8 @@ const Login = () => {
   const form = Form.useForm()[0]
 
   const handleFormSubmit = (data: LoginForm) => {
-    login(data.email, data.password).then((error) => {
-      if (error) message.error(error)
+    login(data.email, data.password).then((r) => {
+      if (typeof r === 'string') return message.error(r)
     })
   }
 

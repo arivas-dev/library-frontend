@@ -13,7 +13,9 @@ export class LocalStorageHandler {
   }
 
   static set user(userObj: User | null) {
-    localStorage.setItem('user', JSON.stringify(userObj))
+    const stringified = JSON.stringify(userObj)
+    this._user = stringified
+    localStorage.setItem('user', stringified)
   }
 
   static get user(): User | null {

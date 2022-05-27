@@ -12,11 +12,11 @@ type LoginResponse = User & {
 }
 
 type AppContextState = BaseAppState & {
-  login: (email: string, password: string) => Promise<string | void>
+  login: (email: string, password: string) => Promise<string | User>
 }
 
 const initialAppState: AppContextState = {
-  login: () => Promise.resolve(),
+  login: () => Promise.resolve(''),
   user: initLoadable<User>({
     email: '',
     id: -1,
@@ -48,7 +48,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         LocalStorageHandler.token = token
         LocalStorageHandler.user = user
         dispatch({ type: 'UPDATE_USER_DATA', user })
-        return
+        return user
       }
 
       dispatch({

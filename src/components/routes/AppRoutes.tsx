@@ -5,6 +5,7 @@ import {
   Navigate,
 } from 'react-router-dom'
 import { Layout } from 'components/Layout'
+import { PrivateRoute } from './PrivateRoute'
 import { AppRoutes as AppRoutesObj } from 'constants/app.routes'
 import { lazy } from 'react'
 
@@ -33,22 +34,68 @@ export const AppRoutes = () => {
 
   const renderStudentRoutes = () => (
     <Route path={student.base} element={<Layout />}>
-      <Route index element={<Navigate to={student.books} replace />} />
+      <Route
+        index
+        element={
+          <PrivateRoute>
+            <Navigate to={student.books} replace />
+          </PrivateRoute>
+        }
+      />
       <Route path={student.books}>
-        <Route index element={<BooksPage />} />
-        <Route path=":id" element={<BookDetailsPage />} />
+        <Route
+          index
+          element={
+            <PrivateRoute>
+              <BooksPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path=":id"
+          element={
+            <PrivateRoute>
+              <BookDetailsPage />
+            </PrivateRoute>
+          }
+        />
       </Route>
-      <Route path={student.requests} element={<StudentRequestsPage />} />
+      <Route
+        path={student.requests}
+        element={
+          <PrivateRoute>
+            <StudentRequestsPage />
+          </PrivateRoute>
+        }
+      />
     </Route>
   )
 
   const renderLibrarianRoutes = () => (
     <Route path={librarian.base} element={<Layout />}>
-      <Route index element={<Navigate to={librarian.checkout} replace />} />
-      <Route path={librarian.checkout} element={<BooksCheckoutPage />} />
+      <Route
+        index
+        element={
+          <PrivateRoute>
+            <Navigate to={librarian.checkout} replace />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={librarian.checkout}
+        element={
+          <PrivateRoute>
+            <BooksCheckoutPage />
+          </PrivateRoute>
+        }
+      />
       <Route
         path={librarian.resourcesCreation}
-        element={<ResourcesCreationPage />}
+        element={
+          <PrivateRoute>
+            <ResourcesCreationPage />
+          </PrivateRoute>
+        }
       />
     </Route>
   )
