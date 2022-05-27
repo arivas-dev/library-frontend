@@ -42,12 +42,17 @@ const BookDetails = () => {
     },
     {
       align: 'center',
+      dataIndex: 'in_stock',
+      title: 'In stock',
+    },
+    {
+      align: 'center',
       dataIndex: 'id',
       title: 'Action',
       fixed: 'right',
       render: (value: number, record) => (
         <Button
-          disabled={record.copies_available === 0}
+          disabled={record.in_stock === 0}
           onClick={() => handleRequestCreation(value)}
           type="primary"
         >

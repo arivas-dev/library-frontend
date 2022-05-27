@@ -90,13 +90,13 @@ export const studentReducer = (
       )
 
       if (action.error && action.error.message.includes('not available')) {
-        clone.bookDetails.data.copies_available = 0
+        clone.bookDetails.data.in_stock = 0
       }
       break
     case 'UPDATE_REQUEST_CREATION_DATA':
       updateLoadableData(clone.requestCreation, null)
-      const copiesAvailable = clone.bookDetails.data.copies_available
-      clone.bookDetails.data.copies_available = copiesAvailable - 1
+      const inStock = clone.bookDetails.data.in_stock
+      clone.bookDetails.data.in_stock = inStock - 1
       break
     case 'UPDATE_BOOK_DETAILS_META_PROPS':
       updateLoadableMetaProps(clone.bookDetails, action.isLoading, action.error)
