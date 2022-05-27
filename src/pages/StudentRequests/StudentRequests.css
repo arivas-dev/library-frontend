@@ -5,3 +5,7 @@
 .student-requests-page h1 {
   margin-bottom: 2em;
 }
+
+.student-requests-page .ant-list-item-meta-description {
+  padding-right: 1em;
+}

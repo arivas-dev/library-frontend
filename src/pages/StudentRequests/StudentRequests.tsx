@@ -1,8 +1,6 @@
-// import { List, Tag } from 'antd'
-// import { BookItem } from 'components/BookItem'
+import { List, Tag } from 'antd'
 import { StudentContext } from 'context/student'
 import { useContext, useEffect } from 'react'
-// import { shouldLoadData } from 'utils/state.utils'
 import './StudentRequests.css'
 
 const StudentRequests = () => {
@@ -12,20 +10,24 @@ const StudentRequests = () => {
     loadRequests()
   }, [loadRequests])
 
-  console.log('requests', requests)
   return (
     <div className="student-requests-page">
       <h1>My requests</h1>
-      {/* <List
-        dataSource={requests}
+      <List
+        loading={requests.isLoading}
+        dataSource={requests.data}
         renderItem={(request) => (
-          <BookItem
-            key={request.id}
-            book={request.book}
-            extra={<Tag color="blue">{request.count}</Tag>}
-          />
+          <List.Item key={request.id}>
+            <List.Item.Meta
+              title={request.title}
+              description={request.description}
+            />
+            <Tag color={request.returned > 0 ? 'green' : 'blue'}>
+              {request.returned > 0 ? 'Returned' : 'Pending'}
+            </Tag>
+          </List.Item>
         )}
-      /> */}
+      />
     </div>
   )
 }

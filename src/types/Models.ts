@@ -21,9 +21,15 @@ export type User = {
 }
 
 export type StudentRequest = {
+  created_at: string | null
+  description: string
   id: number
-  book: Book
-  count: number
+  id_book: number
+  id_user: number
+  returned: number
+  returned_at: string | null
+  title: string
+  user: string
 }
 
 export type BookCheckout = {

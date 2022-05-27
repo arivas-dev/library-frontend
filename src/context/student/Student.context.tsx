@@ -74,14 +74,14 @@ export const StudentContextProvider = ({
     if (!userId) return
 
     dispatch({ type: 'UPDATE_STUDENT_REQUESTS_META_PROPS', isLoading: true })
-    const response = await apiGetProtectedResource<StudentRequest[]>(
+    const response = await apiGetProtectedResource<{ data: StudentRequest[] }>(
       Endpoints.students.requests(userId)
     )
 
     if (isSuccesfulResponse(response)) {
       dispatch({
         type: 'UPDATE_STUDENT_REQUESTS_DATA',
-        requests: response.data,
+        requests: response.data.data,
       })
       return
     }

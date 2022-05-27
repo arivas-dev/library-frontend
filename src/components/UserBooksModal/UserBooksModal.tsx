@@ -1,8 +1,8 @@
 import { Modal, Button, List, Popconfirm } from 'antd'
 import { BookItem } from 'components/BookItem'
-import { StudentRequest } from 'types/models'
+// import { StudentRequest } from 'types/models'
 
-const requests: StudentRequest[] = [
+const requests = [
   {
     id: 1,
     count: 3,
