@@ -35,6 +35,17 @@ type UpdateRequestCreationData = {
   type: 'UPDATE_REQUEST_CREATION_DATA'
 }
 
+type UpdateBookDetailsMetaProps = {
+  type: 'UPDATE_BOOK_DETAILS_META_PROPS'
+  isLoading: boolean
+  error?: Error
+}
+
+type UpdateBookDetailsData = {
+  type: 'UPDATE_BOOKS_DETAILS_DATA'
+  book: Book
+}
+
 export type StudentActions =
   | UpdateBooksMetaProps
   | UpdateBooksData
@@ -42,11 +53,14 @@ export type StudentActions =
   | UpdateRequestsData
   | UpdateRequestCreationMetaProps
   | UpdateRequestCreationData
+  | UpdateBookDetailsMetaProps
+  | UpdateBookDetailsData
 
 export type BaseStudentState = {
   books: Loadable<Book[]>
   requests: Loadable<StudentRequest[]>
   requestCreation: Loadable<null>
+  bookDetails: Loadable<Book>
 }
 
 export const studentReducer = (
@@ -77,6 +91,12 @@ export const studentReducer = (
       break
     case 'UPDATE_REQUEST_CREATION_DATA':
       updateLoadableData(clone.requestCreation, null)
+      break
+    case 'UPDATE_BOOK_DETAILS_META_PROPS':
+      updateLoadableMetaProps(clone.bookDetails, action.isLoading, action.error)
+      break
+    case 'UPDATE_BOOKS_DETAILS_DATA':
+      updateLoadableData(clone.bookDetails, action.book)
       break
     default:
       return state

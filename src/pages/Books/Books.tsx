@@ -23,14 +23,11 @@ const Books = () => {
       <List
         loading={books.isLoading}
         dataSource={books.data}
-        renderItem={(book) => {
-          console.log('book :>> ', book)
-          return (
-            <Link to={book.id.toString()} key={book.id}>
-              <BookItem book={book} />
-            </Link>
-          )
-        }}
+        renderItem={(book) => (
+          <Link to={book.id.toString()} key={book.id}>
+            <BookItem book={book} />
+          </Link>
+        )}
       />
     </div>
   )

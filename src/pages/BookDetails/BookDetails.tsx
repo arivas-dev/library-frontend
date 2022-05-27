@@ -1,32 +1,24 @@
 import { Book } from 'types/models'
-// import { useParams } from 'react-router-dom'
-import { Avatar, Table, Button, Row, Col } from 'antd'
+import { useParams } from 'react-router-dom'
+import { Avatar, Table, Button, Row, Col, Spin } from 'antd'
+import { useEffect, useContext } from 'react'
+import { StudentContext } from 'context/student'
 import { ColumnType } from 'antd/lib/table'
 import './BookDetails.css'
 
-const book: Book = {
-  author: 'Herman Melville',
-  copies_available: 1,
-  description: 'The description',
-  id: 1,
-  id_author: 9,
-  id_genre: 1,
-  image: 'https://picsum.photos/300',
-  name: 'Moby-dick',
-  published: 1900,
-  title: 'The moby-dick',
-  in_stock: 1,
-}
-
 const BookDetails = () => {
-  // const { id } = useParams<{ id: string }>()
+  const { bookDetails, loadBookDetails } = useContext(StudentContext)
+  const book = bookDetails.data
+  const { id } = useParams<{ id: string }>()
+
+  useEffect(() => {
+    const bookId = Number(id)
+    if (bookId !== bookDetails.data.id) {
+      loadBookDetails(bookId)
+    }
+  }, [id, bookDetails.data.id, loadBookDetails])
 
   const cols: ColumnType<Book>[] = [
-    {
-      align: 'center',
-      dataIndex: 'author',
-      title: 'Author',
-    },
     {
       align: 'center',
       dataIndex: 'title',
@@ -56,7 +48,11 @@ const BookDetails = () => {
   ]
 
   return (
-    <div className="book-details">
+    <Spin
+      wrapperClassName="book-details"
+      spinning={bookDetails.isLoading}
+      tip="Loading..."
+    >
       <Row className="book-details-header">
         <Col xs={6} sm={3}>
           <Avatar
@@ -78,7 +74,7 @@ const BookDetails = () => {
         pagination={false}
         scroll={{ x: 500 }}
       />
-    </div>
+    </Spin>
   )
 }
 

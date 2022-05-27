@@ -62,12 +62,13 @@ export const apiPostProtectedResource = async <T>(
   data?: unknown
 ): Promise<ApiResponse<T>> => {
   try {
-    const res = await protectedResourcesInstance.post<
-      BackEndResponse<{ data: T }>
-    >(endpoint, data)
+    const res = await protectedResourcesInstance.post<BackEndResponse<T>>(
+      endpoint,
+      data
+    )
 
     return isBackEndSuccessfulResponse(res.data)
-      ? { data: res.data.data }
+      ? { data: res.data }
       : {
           error: createError(
             res.data.message,
@@ -83,12 +84,12 @@ export const apiGetProtectedResource = async <T>(
   endpoint: string
 ): Promise<ApiResponse<T>> => {
   try {
-    const res = await protectedResourcesInstance.get<
-      BackEndResponse<{ data: T }>
-    >(endpoint)
+    const res = await protectedResourcesInstance.get<BackEndResponse<T>>(
+      endpoint
+    )
 
     return isBackEndSuccessfulResponse(res.data)
-      ? { data: res.data.data }
+      ? { data: res.data }
       : {
           error: createError(
             res.data.message,
