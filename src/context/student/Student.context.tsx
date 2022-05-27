@@ -4,6 +4,7 @@ import { BaseStudentState, studentReducer } from './student.reducer'
 import { isSuccesfulResponse } from 'utils/network.handlers'
 import { Endpoints } from 'constants/endpoints'
 import { Book, StudentRequest } from 'types/models'
+import { LocalStorageHandler } from 'utils/LocalStorageHandler'
 import {
   apiGetProtectedResource,
   apiPostProtectedResource,
@@ -69,9 +70,12 @@ export const StudentContextProvider = ({
   }, [dispatch])
 
   const loadRequests = useCallback(async () => {
+    const userId = LocalStorageHandler.user?.id
+    if (!userId) return
+
     dispatch({ type: 'UPDATE_STUDENT_REQUESTS_META_PROPS', isLoading: true })
     const response = await apiGetProtectedResource<StudentRequest[]>(
-      Endpoints.students.requests
+      Endpoints.students.requests(userId)
     )
 
     if (isSuccesfulResponse(response)) {

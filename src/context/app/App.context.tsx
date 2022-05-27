@@ -46,6 +46,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       if (isSuccesfulResponse(response)) {
         const { token, ...user } = response.data
         LocalStorageHandler.token = token
+        LocalStorageHandler.user = user
         dispatch({ type: 'UPDATE_USER_DATA', user })
         return
       }

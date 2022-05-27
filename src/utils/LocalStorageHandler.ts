@@ -1,5 +1,7 @@
+import { User } from '../types/models'
 export class LocalStorageHandler {
   private static _token = localStorage.getItem('token')
+  private static _user = localStorage.getItem('user')
 
   static get token(): string {
     return this._token || ''
@@ -10,8 +12,22 @@ export class LocalStorageHandler {
     this._token = jwt
   }
 
+  static set user(userObj: User | null) {
+    localStorage.setItem('user', JSON.stringify(userObj))
+  }
+
+  static get user(): User | null {
+    if (this._user) {
+      return JSON.parse(this._user) as User
+    }
+
+    return null
+  }
+
   static clearToken() {
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     this._token = null
+    this._user = null
   }
 }
