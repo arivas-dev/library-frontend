@@ -13,10 +13,9 @@ const BookDetails = () => {
 
   useEffect(() => {
     const bookId = Number(id)
-    if (bookId !== bookDetails.data.id) {
-      loadBookDetails(bookId)
-    }
-  }, [id, bookDetails.data.id, loadBookDetails])
+
+    if (Number.isFinite(bookId)) loadBookDetails(bookId)
+  }, [id, loadBookDetails])
 
   const cols: ColumnType<Book>[] = [
     {
