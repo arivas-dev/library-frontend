@@ -11,10 +11,12 @@ export const Endpoints = {
     createRequest: joinPath('loan/loanBook'),
   },
   librarian: {
-    students: joinPath('students'),
-    studentRequests: (id: number) => joinPath(`student-requests/${id}`),
-    createUser: joinPath('create-user'),
-    createBook: joinPath('create-book'),
-    returnBook: joinPath('return-book'),
+    students: joinPath('user'),
+    genres : joinPath('genre'),
+    author : joinPath('author'),
+    studentRequests: (id: number) => joinPath(`loan/${id}`),
+    createUser: joinPath('user'),
+    createBook: joinPath('book'),
+    returnBook: (id: number) => joinPath(`loan/returnBook/${id}`),
   },
 }

@@ -36,3 +36,12 @@ export type BookCheckout = {
   book: Book
   student: User
 }
+
+export type Genres = {
+  id: number,
+  name : string
+}
+export type Author = {
+  id: number,
+  name : string
+}

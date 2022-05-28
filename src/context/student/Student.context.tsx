@@ -12,7 +12,7 @@ import {
 
 type StudentContextState = BaseStudentState & {
   loadBooks: () => Promise<void>
-  loadRequests: () => Promise<void>
+  loadRequests: (id?:number) => Promise<void>
   createRequest: (bookId: number) => Promise<string | void>
   loadBookDetails: (bookId: number) => Promise<void>
 }
@@ -69,8 +69,9 @@ export const StudentContextProvider = ({
     })
   }, [dispatch])
 
-  const loadRequests = useCallback(async () => {
-    const userId = LocalStorageHandler.user?.id
+  const loadRequests = useCallback(async (id = 0) => {
+    const userId = id > 0 ? id : LocalStorageHandler.user?.id 
+    console.log("loadRequests  -  userId", userId);
     if (!userId) return
 
     dispatch({ type: 'UPDATE_STUDENT_REQUESTS_META_PROPS', isLoading: true })
@@ -87,9 +88,8 @@ export const StudentContextProvider = ({
     }
 
     dispatch({
-      type: 'UPDATE_STUDENT_REQUESTS_META_PROPS',
-      isLoading: false,
-      error: response.error,
+      type: 'UPDATE_STUDENT_REQUESTS_DATA',
+      requests: []
     })
   }, [dispatch])
 

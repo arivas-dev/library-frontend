@@ -1,5 +1,5 @@
 import { updateLoadableData, updateLoadableMetaProps } from 'utils/state.utils'
-import { StudentRequest, User } from 'types/models'
+import { StudentRequest, User,Genres, Author } from 'types/models'
 import { Loadable, Error } from 'types/state'
 import { cloneDeep } from 'lodash'
 
@@ -12,6 +12,27 @@ type UpdateUsersMetaProps = {
 type UpdateUsersData = {
   type: 'UPDATE_USERS_DATA'
   users: User[]
+}
+
+type UpdateGenresMetaProps = {
+  type: 'UPDATE_GENRES_META_PROPS'
+  isLoading: boolean
+  error?: Error
+}
+
+type UpdateGenresData = {
+  type: 'UPDATE_GENRES_DATA'
+  genres: Genres[]
+}
+type UpdateAuthorMetaProps = {
+  type: 'UPDATE_AUTHOR_META_PROPS'
+  isLoading: boolean
+  error?: Error
+}
+
+type UpdateAuthorData = {
+  type: 'UPDATE_AUTHOR_DATA'
+  author: Author[]
 }
 
 type UpdateRequestsMetaProps = {
@@ -42,9 +63,15 @@ export type LibrarianActions =
   | UpdateRequestsData
   | UpdateResourceCreationMetaProps
   | UpdateResourceCreationData
+  | UpdateGenresMetaProps
+  | UpdateGenresData
+  | UpdateAuthorMetaProps
+  | UpdateAuthorData
 
 export type BaseLibrarianState = {
   users: Loadable<User[]>
+  genres: Loadable<Genres[]>
+  author: Loadable<Author[]>
   requests: Loadable<StudentRequest[]>
   userCreation: Loadable<null>
   bookCreation: Loadable<null>
@@ -62,6 +89,18 @@ export const librarianReducer = (
       break
     case 'UPDATE_USERS_DATA':
       updateLoadableData(clone.users, action.users)
+      break
+    case 'UPDATE_GENRES_META_PROPS':
+      updateLoadableMetaProps(clone.genres, action.isLoading, action.error)
+      break
+    case 'UPDATE_GENRES_DATA':
+      updateLoadableData(clone.genres, action.genres)
+      break
+    case 'UPDATE_AUTHOR_META_PROPS':
+      updateLoadableMetaProps(clone.author, action.isLoading, action.error)
+      break
+    case 'UPDATE_AUTHOR_DATA':
+      updateLoadableData(clone.author, action.author)
       break
     case 'UPDATE_USER_REQUESTS_META_PROPS':
       updateLoadableMetaProps(clone.requests, action.isLoading, action.error)

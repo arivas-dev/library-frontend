@@ -16,7 +16,7 @@ export const BookItem = (props: BookItemProps) => {
         avatar={<Avatar src={book.image} />}
         title={
           <p>
-            <b>{book.author}: </b>
+            <b>{book.title} - {book.author}</b>
             {book.name} ({book.published})
           </p>
         }
